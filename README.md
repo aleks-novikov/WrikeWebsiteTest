@@ -11,12 +11,12 @@
 8.	Create results report using allure plugin.  
 
 #### Стек:
-•	Platform: java8
-•	Build: maven
-•	Test framework: junit4
-•	UI test: selenium 3 (without wrappers)
-•	Pattern: pageObject (test -> steps -> pages)
-•	Reporting: allure plugin
+*	Platform: java8
+*	Build: maven
+*	Test framework: junit4
+*	UI test: selenium 3 (without wrappers)
+*	Pattern: pageObject (test -> steps -> pages)
+*	Reporting: allure plugin
 
 #### Сборка проекта и генерация отчёта
 Набрать в корне проекта в командной строке:
