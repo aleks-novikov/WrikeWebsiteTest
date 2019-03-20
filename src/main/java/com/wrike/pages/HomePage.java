@@ -52,10 +52,10 @@ public class HomePage {
     @Step("4.Click 'Create my Wrike account' button and redirect to the Resend page")
     public void createWrikeAccountBtnClick() {
         createWrikeAccountBtn.click();
-        driver.get(Links.RESEND_PAGE_URL.getLink());
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        driver.navigate().to(Links.RESEND_PAGE_URL.getLink());
         waitnigUtil.wait(driver, ".modal-form-trial__input", false);
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(new By.ByClassName("survey")));
         assertEquals("Redirecting to Resend page wasn't executed!", Links.RESEND_PAGE_URL.getLink(), driver.getCurrentUrl());
     }
