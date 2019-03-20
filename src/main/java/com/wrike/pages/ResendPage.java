@@ -1,5 +1,6 @@
 package com.wrike.pages;
 
+import com.wrike.links.Links;
 import com.wrike.util.IWaitnigForElements;
 import com.wrike.util.WaitnigForElements;
 import io.qameta.allure.Step;
@@ -9,6 +10,10 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 import java.util.Random;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class ResendPage {
     private WebDriver driver;
@@ -45,14 +50,6 @@ public class ResendPage {
     @FindBy(css = ".wg-footer__social-block > div > ul > li:nth-child(1) > a > svg > use")
     private WebElement twitterIcon;
 
-    public WebElement getResentEmailButton() {
-        return resentEmailButton;
-    }
-
-    public WebElement getSurveySuccessWindow() {
-        return surveySuccessWindow;
-    }
-
     @Step("Set random answers in the Q&A section and assertion data filling")
     public void fillingSurveyForm() {
         Random random = new Random();
@@ -71,16 +68,20 @@ public class ResendPage {
             submitResultsButton.click();
             waitnigUtil.wait(driver, ".survey-success", true);
         }
+
+        assertTrue("Form results wasn't sent!", surveySuccessWindow.isDisplayed());
     }
 
     @Step("6.Click 'Resend email'")
     public void clickResendEmailBtn() {
         resentEmailButton.click();
         waitnigUtil.wait(driver, ".wg-cell--order-1 > p > button", false);
+        assertFalse("Email wasn't resended!", resentEmailButton.isDisplayed());
     }
 
     @Step("7. section 'Follow us' at the site footer contains the 'Twitter' button and icon")
-    public String[] getTwitterIconAndLink() {
-        return new String[]{twitterButton.getAttribute("href"), twitterIcon.getAttribute("xlink:href")};
+    public void checkTwitterIconAndLink() {
+        assertEquals("Incorrect link of Wrike Twitter site!", Links.TWITTER_WRIKE_LINK.getLink(), twitterButton.getAttribute("href"));
+        assertEquals("Incorrect link of icon", Links.TWITTER_ICON_TEXT.getLink(), twitterIcon.getAttribute("xlink:href"));
     }
 }

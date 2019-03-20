@@ -12,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static org.junit.Assert.assertEquals;
+
 @Log
 public class HomePage {
     private WebDriver driver;
@@ -33,6 +35,7 @@ public class HomePage {
     @Step("1.Open url: wrike.com")
     public void open(String url) {
         driver.get(url);
+        assertEquals("Your online project management software - Wrike", driver.getTitle());
     }
 
     @Step("2.Click 'Get started for free' button")
@@ -49,9 +52,11 @@ public class HomePage {
     @Step("4.Click 'Create my Wrike account' button and redirect to the Resend page")
     public void createWrikeAccountBtnClick() {
         createWrikeAccountBtn.click();
-        driver.navigate().to(Links.RESEND_PAGE_URL.getLink());
+        driver.get(Links.RESEND_PAGE_URL.getLink());
+        waitnigUtil.wait(driver, ".modal-form-trial__input", false);
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(new By.ByClassName("survey")));
+        assertEquals("Redirecting to Resend page wasn't executed!", Links.RESEND_PAGE_URL.getLink(), driver.getCurrentUrl());
     }
 }
